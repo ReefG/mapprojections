@@ -21,18 +21,18 @@ def y_to_pixel(y):
 def pixel_to_y(pixel):
     return (pixel/map_length - 0.5) * 2
 
-# def phi_to_pixel(phi):
-#     return round((phi + 0.5*math.pi)/math.pi*1023)
-
-# def lambdda_to_pixel(lambdda):
-#     return round((lambdda + math.pi)/(2*math.pi)*2047)
-
-
 def phi_to_pixel(phi):
-    return round((phi + 0.5*math.pi)/math.pi*21599)
+    return round((phi + 0.5*math.pi)/math.pi*1023)
 
 def lambdda_to_pixel(lambdda):
-    return round((lambdda + math.pi)/(2*math.pi)*43199)
+    return round((lambdda + math.pi)/(2*math.pi)*2047)
+
+
+# def phi_to_pixel(phi):
+#     return round((phi + 0.5*math.pi)/math.pi*21599)
+
+# def lambdda_to_pixel(lambdda):
+#     return round((lambdda + math.pi)/(2*math.pi)*43199)
 
 def transform(phi, lambdda): 
     x = lambdda
@@ -45,9 +45,8 @@ def inv_transform(x,y):
     return (phi, lambdda)
     
 
-
-# world = image.imread("land_shallow_topo_2048.tif") # longitude theta by latitude phi, in this map
-world = image.imread("world_shaded_43k.jpg") # longitude theta by latitude phi, in this map
+world = image.imread("land_shallow_topo_2048.tif") # longitude theta by latitude phi, in this map
+# world = image.imread("world_shaded_43k.jpg") # longitude theta by latitude phi, in this map
 
 
 new_world = np.empty(  ( map_length , map_width , 3 ), dtype=np.uint8 ) # this will be (y,x)
@@ -55,13 +54,11 @@ new_world = np.empty(  ( map_length , map_width , 3 ), dtype=np.uint8 ) # this w
 angle_dist = np.empty(  ( map_length , map_width , 1 ))
 
 
-
-
 for x_pixel in range(0, map_width):
     for y_pixel in range(0, map_length):
         (phi, lambdda) = inv_transform(pixel_to_x(x_pixel),pixel_to_y(y_pixel))
         (phi_pixel, lambdda_pixel) = (phi_to_pixel(phi), lambdda_to_pixel(lambdda))
-        if (phi_pixel >= 0 and lambdda_pixel >=0 and phi_pixel <= 21599 and lambdda_pixel <= 43199):
+        if (phi_pixel >= 0 and lambdda_pixel >=0 and phi_pixel <= 1023 and lambdda_pixel <= 2047):
             pixel_value = world[phi_pixel][lambdda_pixel]
             new_world[y_pixel][x_pixel] = pixel_value
             k = 1/math.cos(phi)

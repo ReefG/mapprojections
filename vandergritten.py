@@ -221,9 +221,9 @@ def score(c):
             s[1] = c*s[1]
             if (s[0] <= 0 or s[1] <= 0):
                 continue
-            # ar = s[0]*s[1]
-            # if (s[0] > 0 and s[1] > 0 and ar < 1):
-            #     ar = ar
+            ar = s[0]*s[1]
+            if (s[0] > 0 and s[1] > 0 and ar < 1):
+                ar = ar
             value = abs(math.log(s[0])) + abs(math.log(s[1]))
             total  = total + value*math.cos(phi)
             total_normal = total_normal + math.cos(phi)
@@ -266,17 +266,27 @@ def area_score(c):
             total_normal = total_normal + math.cos(phi)
     return total/(total_normal)
 
+cs = np.linspace(0.1, 5, num = 50)
+alphas = []
+for c in cs:
+    alphas.append(score(c))
+
+plt.figure(dpi =400)
+plt.ylabel("Value of μ for the Van der Grinten projection")
+plt.xlabel("Value of c with which the projection is scaled")
+plt.plot(cs, alphas)
+
 # area_score = area_score()
 
-plt.figure(dpi = 400)
-plt.axis('off')
-plot_parallels()
-plot_meridians()
-plt.imshow(new_world)
+# plt.figure(dpi = 400)
+# plt.axis('off')
+# plot_parallels()
+# plot_meridians()
+# plt.imshow(new_world)
 
-hm = plt.imshow(angle_dist, cmap="hot", interpolation='nearest', alpha=0.7, vmax = 1)  
-ax = plt.gca()
-cbar = ax.figure.colorbar(hm, ax=ax)
+# hm = plt.imshow(angle_dist, cmap="hot", interpolation='nearest', alpha=0.7, vmax = 1)  
+# ax = plt.gca()
+# cbar = ax.figure.colorbar(hm, ax=ax)
 
 # plt.figure(dpi = 400)
 # plt.axis('off')

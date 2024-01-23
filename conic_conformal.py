@@ -221,33 +221,6 @@ def area_score():
             total_normal = total_normal + math.cos(phi)
     return total/(total_normal)
 
-def s_min():
-    steps =1000
-    lambddas = np.linspace(-math.pi, math.pi, num=steps*2)
-    phis = np.linspace(-math.pi*0.4999, math.pi/2, num=steps)
-    smin = 100000000000000000
-    for phi in phis:
-        for lambdda in lambddas:
-            s = ((F*n*(1/math.cos(phi)))**2)/math.tan(math.pi/4 + phi/2)**(2*n)
-            if (s < smin): smin = s
-    return smin
-
-def area_score3():
-    total = 0
-    total_normal = 0
-    steps = 1000
-    lambddas = np.linspace(-math.pi, math.pi, num=steps*2)
-    phis = np.linspace(-math.pi*0.4999, math.pi/2, num=steps)
-    smin = s_min()           
-    for phi in phis:
-        for lambdda in lambddas:
-            s =((F*n*(1/math.cos(phi)))**2)/math.tan(math.pi/4 + phi/2)**(2*n) / smin
-            if (s <= 0): continue
-            value = abs(math.log(s))
-            total  = total + value*math.cos(phi)
-            total_normal = total_normal + math.cos(phi)
-    return total/(total_normal)
-
 # area_score = area_score()
 
 plt.figure(dpi = 400)

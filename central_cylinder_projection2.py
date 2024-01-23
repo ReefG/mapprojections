@@ -34,16 +34,13 @@ def transform(phi, lambdda): #input is in real numbers aka pi and stuff
     return (y,x)
     
     
-# phi_list =[]
 def inv_transform(x,y): #Input is in reals
     lambdda = x
     phi = math.atan(y)
     return (phi, lambdda)
     
 
- 
 world = image.imread("land_shallow_topo_2048.tif") # longitude theta by latitude phi, in this map
-
 
 new_world = np.empty(  ( map_length , map_width , 3 ), dtype=np.uint8 ) # this will be (y,x)
 
@@ -85,7 +82,6 @@ for meridian in meridians:
 
 for j in range(0, len(meridians)):
     plt.plot(xy_meridians[j, :, 1], xy_meridians[j, :, 0], "w", alpha=0.3)
-
 
 
 for x_pixel in range(0, map_width):
